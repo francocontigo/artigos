@@ -1,0 +1,93 @@
+# Afinal, o que é uma API?
+
+Uma Interface de Programação de Aplicações (API) é um conjunto de serviços, ferramentas, funções e protocolos implementados em um software, disponibilizados a outros sistemas por meio de um contrato. Sua documentação define esse contrato e como enviar solicitações de forma estruturada, determinando como a aplicação responderá. As APIs abstraem a complexidade do sistema, simplificando a interação entre diferentes softwares e permitindo que aplicativos se comuniquem de forma eficiente e padronizada.
+
+## Tipos de conexão
+
+Um cliente que deseja acessar os recursos fornecidos por uma API envia uma solicitação para um endpoint, seguindo o formato definido na documentação da API. Após receber a solicitação, a API processa as informações e retorna os dados solicitados ao cliente no formato estabelecido no contrato.
+
+*GIF*
+
+### Alguns formatos de conexão:
+
+*Web client e servidor:*
+- Comunicação entre um cliente e um servidor web;
+- Baseado em solicitações HTTP;
+- Geralmente usado para trafegar dados nos formatos JSON ou XML.
+
+*REST (Representational State Transfrer):*
+- Comunicação baseada nos padrões HTTP;
+- Utiliza métodos HTTP como GET, POST, PUT, DELETE;
+- Utiliza URIs para identificar recursos.
+
+*Remote Procedure Call (RPC):*
+- Permite que um software solicite recursos localizados em outra máquina na rede;
+- Usa uma sintaxe específica para solicitar os recursos;
+- Pode utilizar diferentes protocolos de comunicação, como HTTP, TCP, UDP e outros.
+
+*Aplicação e recurso local:*
+- Comunicação entre diferentes partes de uma mesma aplicação ou sistema;
+- Normalmente é feita chamando funções dentro da mesma aplicação;
+- Pode ser no modelo síncrono ou assíncrono, a depender da arquitura da aplicação.
+
+### Diferença entre REST e RESTful
+
+Embora sejam às vezes mencionados como a mesma coisa sem causar problemas, há uma distinção entre os dois termos. REST é uma arquitetura que define um conjunto de princípios para criar serviços web, enquanto RESTful refere-se à implementação desses princípios. Enquanto REST define os princípios gerais, como o uso dos métodos HTTP, RESTful se refere à implementação desses princípios seguindo os critérios estabelicidos pelo REST.
+
+
+## Como uma API funciona
+
+Você pode interagir com APIs fazendo requests a ela, um exemplo de código em Python usando a biblioteca requests com uma API fantasiosa com os dados do jogo Dark Souls.
+
+```Python
+import requests
+
+# URL da API
+url = "https://darksoulsbossesapi.com/api/bosses"
+
+# Fazendo a requisição GET para a API
+response = requests.get(url)
+
+# Verificando se a requisição foi bem-sucedida (código 200)
+if response.status_code == 200:
+    # Extraindo os dados da resposta
+    bosses_data = response.json()
+
+    # Imprimindo os nomes dos chefes de Dark Souls
+    print("Lista de chefes de Dark Souls:")
+    for boss in bosses_data:
+        print(boss['name'])
+else:
+    print("Erro ao acessar a API:", response.status_code)
+
+```
+
+Esse exemplo poderia retornar um JSON como:
+```JSON
+[
+    {
+        "id": 1,
+        "name": "Asylum Demon",
+        "description": "The first boss of the game."
+    },
+    {
+        "id": 2,
+        "name": "Bell Gargoyles",
+        "description": "A pair of gargoyles that guard the bell in the Undead Parish."
+    },
+    {
+        "id": 3,
+        "name": "Capra Demon",
+        "description": "A boss found in the Lower Undead Burg."
+    },
+    ...
+]
+
+```
+
+## Considerações sobre desenvolvimento de APIs
+
+Desenvolver uma API envolve considerar o que ela vai abstrair e a lógica que será utilizada em suas implementações e chamadas. Uma API bem projetada deve fornecer acesso controlado a um sistema por meio de endpoints definidos no contrato, garantindo segurança e integridade dos dados. Ela deve ser independente do sistema subjacente, ou seja, deve permanecer funcional e consistente mesmo que o sistema que ela suporta sofra alterações. *Uma API pode ser simples ou complexa, nunca confusa*.
+
+
+

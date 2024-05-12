@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/ricar/Documents/dev/artigos/Afinal, o que é uma API/media/videos/http_request/480p15/partial_movie_files/HTTPRequest/1185818338_2268332985_2921776058.mp4'
+file 'file:C:/Users/ricar/Documents/dev/artigos/Afinal, o que é uma API/media/videos/http_request/480p15/partial_movie_files/HTTPRequest/624642324_2551501503_3143668150.mp4'
+file 'file:C:/Users/ricar/Documents/dev/artigos/Afinal, o que é uma API/media/videos/http_request/480p15/partial_movie_files/HTTPRequest/624642324_3023179539_1724358172.mp4'
+file 'file:C:/Users/ricar/Documents/dev/artigos/Afinal, o que é uma API/media/videos/http_request/480p15/partial_movie_files/HTTPRequest/624642324_653346528_3143668150.mp4'
+file 'file:C:/Users/ricar/Documents/dev/artigos/Afinal, o que é uma API/media/videos/http_request/480p15/partial_movie_files/HTTPRequest/624642324_1604741972_1724358172.mp4'
