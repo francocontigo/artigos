@@ -116,3 +116,6 @@ with open("books_info.json", 'w', encoding='utf-8') as json_file:
     json.dump(books_info, json_file, ensure_ascii=False, indent=4)
 
 
+Este código é um bom ponto de partida para quem deseja praticar técnicas de web scraping. Um próximo passo interessante seria adaptar o código para extrair informações de todas as páginas do site.
+Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato. Você pode encontrar o código completo deste exemplo em: https://github.com/francocontigo/artigos/blob/main/WebScraping101/scraping.py
+Para outras informações de contato, https://github.com/francocontigo
