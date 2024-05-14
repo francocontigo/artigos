@@ -1,0 +1,118 @@
+# Web Scraping 101
+
+Aqui você vai aprender o conceito de web scraping e algumas técnicas empregadas nesse processo, uma introdução ao uso do arquivo robots.txt, que define diretrizes para bots de web scraping, e um exemplo prático com Python e a biblioteca httpx.
+
+Web Scraping ou em português raspagem da web, é uma forma de mineração de dados (será abordado em outro artigo) focada em extrair dados de páginas web. Esse processo envolve converter os dados coletados para uma forma estruturada, permitindo seu uso em análises, relatórios, integração com banco de dados e outros. É empregado em diversos contextos, como monitorar preços de itens especificos, buscar documentos, avaliar reações em redes sociais e outros.
+
+Algumas tecnicas de scraping:
+
+Cópia Manual
+- Extração manual copiando e colando informações (quem nunca, não é mesmo?);
+- Adequado para informações e tarefas pontuais.
+
+Requisições HTTP
+- Enria requisições diretamente para o servidor;
+- Recebe como resposta um HTML ou JSON;
+- Com Python, é empregado o uso de bibliotecas como urllib e httpx para automatizar o processo.
+
+Reconhecimento Semântico
+- Analisa a estrutura e o significado do conteúdo da página
+- Também é empregaddo tecnicas de processamento de linguagem natural;
+- Empregada para extrair informações de textos ou conteúdo com significado implicito.
+
+Aplicação de Visão Computacional
+- Utilizada para extrair dados de imagens ou capturas de telas;
+- Aplicável em cenários onde os dados não estão disponíveis em texto, como gráficos, captchas ou fluxogramas;
+- Usa ferramentas de reconhecimento de caracteres para converter imagens em texto.
+
+Por meio de APIs
+- Acessa os dados atráves de APIs fornecidas por serviços web;
+- Evita a necessidade de parsing de HTML;
+- Reduz o risco de bloqueio por parte dos sites, é a maneira oficial de acessar os dados.
+
+## robots.txt
+
+O arquivo robots.txt é um arquivo de texto usado por websites para comunicar os motores de busca e outros crawlers quais partes do site podem ou não ser rastreadas ou indexadas. Ele está localizado na raiz de um domínio de um website (por exemplo, https://medium.com/robots.txt).
+
+Como ler um arquivo robots.txt
+- User-agent: Define para quais robôs a regra se aplica, o asterisco '*' é empregado se referindo a todos os robôs;
+- Disallow: Especifica os diretórios que não devem ser rastreados pelo robô definido;
+- Allou: Permite o rastreamento de diretórios, mesmo dentro de uma regra de "Disallow".
+
+User-agent: *
+Disallow: /private/
+Disallow: /temp/
+
+User-agent: c3p0
+Disallow: /no-c3p0/
+
+No exemplo acima, nenhum robô deve rastrear os diretórios private e temp, enquanto o indexador c3p00, não deve acessar o diretório no-c3p0.
+
+## Hands on
+
+Vamos fazer o scraping de um classico desse meio, o site Books to Scrape, https://books.toscrape.com/
+
+Vamos começar instalando as bibliotecas necessárias:
+
+pip install httpx beautifulsoup4
+
+Importando as bibliotecas:
+
+```
+import httpx
+from bs4 import BeautifulSoup
+import json
+```
+
+Fazendo a requisição, criando um objeto BeautifulSoup e buscando todos os elementos HTML que representam os livros:
+
+```
+# URL da página
+url = "https://books.toscrape.com/"
+# Fazendo a requisição HTTP
+response = httpx.get(url)
+# Criando um objeto BeautifulSoup para analisar o conteúdo HTML da página
+soup = BeautifulSoup(response.text, "html.parser")
+# Encontrando todos os elementos HTML que representam os livros na página
+books = soup.find_all("article", class_="product_pod")
+```
+
+Armazenar as informações de todos os livros da página, fazendo a iteração por cada elemento encontrado:
+
+# Lista para armazenar as informações dos livros
+books_info = []
+# Iterando sobre cada elemento de livro encontrado
+for book in books:
+    # Extraindo o título do livro
+    title = book.h3.a["title"]
+    # Extraindo o preço do livro
+    price = book.find("p", class_="price_color").get_text().strip()
+    # Extraindo a avaliação do livro (classe CSS indica a avaliação)
+    rating = book.p["class"][1]
+    # Extraindo a disponibilidade do livro
+    stock = book.find("p", class_="instock availability").get_text().strip()
+
+    # Criando um dicionário com as informações do livro
+    book_info = {
+        "title": title,
+        "price": price,
+        "rating": rating,
+        "availability": stock
+    }
+    # Adicionando o dicionário à lista de informações dos livros
+    books_info.append(book_info)
+
+    # Imprimindo as informações de cada livro (opcional)
+    print(f"Title: {title}")
+    print(f"Price: {price}")
+    print(f"Rating: {rating}")
+    print(f"Available: {stock}")
+    print()
+
+E agora armazenando as infomrações dos livros em um arquivo JSON
+
+# Salvando as informações dos livros em um arquivo JSON
+with open("books_info.json", 'w', encoding='utf-8') as json_file:
+    json.dump(books_info, json_file, ensure_ascii=False, indent=4)
+
+
